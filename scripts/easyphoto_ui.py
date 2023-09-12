@@ -13,6 +13,7 @@ from scripts.easyphoto_train import (DEFAULT_CACHE_LOG_FILE,
                                      easyphoto_train_forward)
 
 gradio_compat = True
+external_ckpt_dir = shared.cmd_opts.ckpt_dir if shared.cmd_opts.ckpt_dir else []
 
 try:
     from distutils.version import LooseVersion
@@ -101,13 +102,13 @@ def on_ui_tabs():
                                     for _checkpoint in os.listdir(os.path.join(models_path, "Stable-diffusion")):
                                         if _checkpoint.endswith(("pth", "safetensors", "ckpt")):
                                             checkpoints.append(_checkpoint)
-                                    return gr.update(choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints)))
+                                    return gr.update(choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints + external_ckpt_dir)))
                                 
                                 checkpoints = []
                                 for _checkpoint in os.listdir(os.path.join(models_path, "Stable-diffusion")):
                                     if _checkpoint.endswith(("pth", "safetensors", "ckpt")):
                                         checkpoints.append(_checkpoint)
-                                sd_model_checkpoint = gr.Dropdown(value="Chilloutmix-Ni-pruned-fp16-fix.safetensors", choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints)), label="The base checkpoint you use.", visible=True)
+                                sd_model_checkpoint = gr.Dropdown(value="Chilloutmix-Ni-pruned-fp16-fix.safetensors", choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints + external_ckpt_dir)), label="The base checkpoint you use.", visible=True)
 
                                 checkpoint_refresh = ToolButton(value="\U0001f504")
                                 checkpoint_refresh.click(
@@ -247,13 +248,13 @@ def on_ui_tabs():
                                 for _checkpoint in os.listdir(os.path.join(models_path, "Stable-diffusion")):
                                     if _checkpoint.endswith(("pth", "safetensors", "ckpt")):
                                         checkpoints.append(_checkpoint)
-                                return gr.update(choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints)))
+                                return gr.update(choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints + external_ckpt_dir)))
                             
                             checkpoints = []
                             for _checkpoint in os.listdir(os.path.join(models_path, "Stable-diffusion")):
                                 if _checkpoint.endswith(("pth", "safetensors", "ckpt")):
                                     checkpoints.append(_checkpoint)
-                            sd_model_checkpoint = gr.Dropdown(value="Chilloutmix-Ni-pruned-fp16-fix.safetensors", choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints)), label="The base checkpoint you use.", visible=True)
+                            sd_model_checkpoint = gr.Dropdown(value="Chilloutmix-Ni-pruned-fp16-fix.safetensors", choices=list(set(["Chilloutmix-Ni-pruned-fp16-fix.safetensors"] + checkpoints + external_ckpt_dir)), label="The base checkpoint you use.", visible=True)
 
                             checkpoint_refresh = ToolButton(value="\U0001f504")
                             checkpoint_refresh.click(
